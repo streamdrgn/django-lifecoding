@@ -21,6 +21,5 @@ from myapp import views
 urlpatterns = [
     path('', views.index),
     path('create/', views.create),
-    path('read/1/', views.index)
+    path('read/<id>/', views.read)
 ]
-    
