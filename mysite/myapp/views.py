@@ -20,6 +20,9 @@ def HTMLTemplate(articleTag):
             {ol}
         </ul>
         {articleTag}
+        <ul>
+            <li><a href="/create/">create</a></li>
+        </ul>
     </body>
     </html>
     '''
@@ -42,7 +45,16 @@ def index(request):
     </html>
     ''')
 
+
 def create(request):
-    return HttpResponse('Create')
+    article = '''
+    <form action="/create/">
+        <p><input type="text" name ="title" placeholder="title"></p>
+        <p><textarea name="body" placeholder="body></textarea></p>
+        <p><input type="submit"></p>
+        '''
+    return HttpResponse(HTMLTemplate(article))
+
+
 def read(request, id):
     return HttpResponse('Read!'+id)
