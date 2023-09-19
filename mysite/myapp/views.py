@@ -6,7 +6,6 @@ topics = [
     {'id':3, 'title':'Model', 'body':'Model is ..'},
 ]
 
-
 def HTMLTemplate(articleTag):
     global topics
     ol = ''
@@ -15,35 +14,32 @@ def HTMLTemplate(articleTag):
     return f'''
     <html>
     <body>
-        <h1><a href="/">Django</a><h1>
+        <h1><a href="/"> Django</a></h1>
         <ul>
             {ol}
         </ul>
         {articleTag}
-        <ul>
-            <li><a href="/create/">create</a></li>
-        </ul>
     </body>
     </html>
     '''
 
+
 def index(request):
-    global topics
-    ol = ''
-    for topic in topics:
-        ol += f'<li><a href="/read/{topic["id"]}">{topic["title"]}</li>'
-    return HttpResponse(f'''
-    <html>
-    <body>
-        <h1>Django</h1>
-        <ol>
-            {ol}
-        </ol>
-        <h2>Welcome</h2>
+    article = '''
+    <h2>Welcome</h2>
         Hello, Django
-    </body>
-    </html>
-    ''')
+    '''
+
+    return HttpResponse(HTMLTemplate(article))
+
+
+def read(request, id):
+    global topics
+    article = ''
+    for topic in topics:
+        if topic['id'] == int(id):
+            article = f'<h2>{topic["title"]}</h2>{topic["body"]}'
+    return HttpResponse(HTMLTemplate(article))
 
 
 def create(request):
@@ -52,9 +48,6 @@ def create(request):
         <p><input type="text" name ="title" placeholder="title"></p>
         <p><textarea name="body" placeholder="body></textarea></p>
         <p><input type="submit"></p>
+    </form>
         '''
     return HttpResponse(HTMLTemplate(article))
-
-
-def read(request, id):
-    return HttpResponse('Read!'+id)
